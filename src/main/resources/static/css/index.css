@@ -1,0 +1,201 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    min-width: 320px;
+    transform: translateY(0);
+    animation: floatIn 0.6s ease-out;
+}
+
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-content {
+    text-align: center;
+}
+
+.user-greeting {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.emoji {
+    font-size: 28px;
+    animation: wave 2s infinite;
+    transform-origin: 70% 70%;
+    display: inline-block;
+}
+
+@keyframes wave {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.name {
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.message {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+.time-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.current-time {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.current-date {
+    font-size: 14px;
+    color: #666;
+}
+
+.logout-container {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 24px;
+    background: #fff;
+    border: none;
+    border-radius: 16px;
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.04),
+            0 4px 12px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.logout-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0.05) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.06),
+            0 8px 16px rgba(0, 0, 0, 0.08);
+    color: #e63946;
+}
+
+.logout-btn:hover::before {
+    opacity: 1;
+}
+
+.logout-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.logout-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.logout-btn:hover .logout-icon {
+    transform: translateX(2px);
+    stroke: #e63946;
+}
+
+/* 추가적인 애니메이션 효과 */
+.logout-btn:active {
+    transform: translateY(0);
+    box-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.04),
+            0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* 다크 모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .logout-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #ff6b6b;
+    }
+}
