@@ -2,13 +2,13 @@
 FROM eclipse-temurin:17-jdk AS build
 
 # 작업 디렉토리 설정
-WORKDIR /home/ubuntu/simple
+WORKDIR /simple
 
 # Gradle wrapper 및 프로젝트 파일 복사
 COPY . .
 
 # Gradle 빌드 실행 (build/libs/*.jar 생성됨)
-RUN ./gradlew build --no-daemon
+RUN chmod +x ./gradlew && ./gradlew clean build -x test --no-daemon
 
 # 2단계: 실제 실행 이미지 (최종 이미지)
 FROM eclipse-temurin:17-jre
@@ -17,7 +17,7 @@ FROM eclipse-temurin:17-jre
 ENV TZ=Asia/Seoul
 
 # JAR 복사 (위 단계에서 생성된 JAR)
-COPY --from=build /home/ubuntu/simple/build/libs/*.jar app.jar
+COPY --from=build /simple/build/libs/simple-0.0.1-SNAPSHOT.jar app.jar
 
 # 포트 오픈 (Spring Boot 기본 포트)
 EXPOSE 10000
