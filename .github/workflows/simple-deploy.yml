@@ -44,4 +44,7 @@ jobs:
           docker run -d -p 80:10000 --name simple simple-app
 
     - name: Clean up dangling images
-      run: docker image prune -f
+      if: success()  # 이전 step이 성공했을 때만 실행
+      run: |
+        ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@$HOST << 'EOF'
+          docker image prune -f
