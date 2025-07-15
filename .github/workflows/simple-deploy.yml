@@ -1,35 +1,41 @@
-name: Deploy to EC2
+name: Deploy to Multiple EC2s
 
 on:
   push:
     branches:
-      - master  # 또는 PR merge 후 main 브랜치
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - name: EC2_HOST1
+          - name: EC2_HOST2
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      
-    - name: Debug EC2_HOST
-      run: echo "EC2_HOST is ${{ secrets.EC2_HOST }}"
+
+    - name: Set HOST env var from secrets
+      run: echo "HOST=${{ secrets[matrix.name] }}" >> $GITHUB_ENV
 
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+        ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
 
     - name: Copy project to EC2
       run: |
-        rsync -avz -e "ssh -i ~/.ssh/id_rsa" . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ubuntu/simple
+        rsync -avz -e "ssh -i ~/.ssh/id_rsa" . ${{ secrets.EC2_USER }}@$HOST:/home/ubuntu/simple
 
     - name: Build & Run Docker on EC2
       run: |
-        ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+        ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@$HOST << 'EOF'
           cd /home/ubuntu/simple
           docker stop simple || true
           docker rm simple || true
