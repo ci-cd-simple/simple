@@ -17,10 +17,10 @@ FROM eclipse-temurin:17-jre
 ENV TZ=Asia/Seoul
 
 # JAR 복사 (위 단계에서 생성된 JAR)
-COPY --from=build /simple/build/libs/*.jar app.jar
+COPY --from=build /simple/build/libs/*.jar simple.jar
 
 # 포트 오픈 (Spring Boot 기본 포트)
 EXPOSE 10000
 
 # 실행 명령
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "simple.jar"]
