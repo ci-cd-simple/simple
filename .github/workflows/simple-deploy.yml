@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      
+    - name: Debug EC2_HOST
+      run: echo "EC2_HOST is ${{ secrets.EC2_HOST }}"
 
     - name: Set up SSH
       run: |
