@@ -36,4 +36,7 @@ jobs:
           docker rmi simple-app || true
           docker build -t simple-app .
           docker run -d -p 80:10000 --name simple simple-app
+
+    - name: Clean up dangling images
+      run: docker image prune -f
         EOF
