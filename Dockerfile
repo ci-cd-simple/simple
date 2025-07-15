@@ -8,7 +8,7 @@ WORKDIR /home/ubuntu/simple
 COPY . .
 
 # Gradle 빌드 실행 (build/libs/*.jar 생성됨)
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew build --no-daemon
 
 # 2단계: 실제 실행 이미지 (최종 이미지)
 FROM eclipse-temurin:17-jre
